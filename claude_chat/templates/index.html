@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Chat Interface</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <button id="new-chat">
+                    <i class="fas fa-plus"></i> New Chat
+                </button>
+            </div>
+            <div class="conversations-list" id="conversations-list">
+                {% for conversation in conversations %}
+                <div class="conversation-item" data-id="{{ conversation.id }}">
+                    <span class="conversation-title">{{ conversation.title }}</span>
+                    <div class="conversation-actions">
+                        <button class="edit-conversation" data-id="{{ conversation.id }}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="delete-conversation" data-id="{{ conversation.id }}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="chat-container">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <!-- Replace the existing content with this -->
+                    <h1 id="current-chat-title">Claude Chat</h1>
+                    <div class="chat-actions">
+                        <button id="clear-chat">
+                            <i class="fas fa-broom"></i> Clear Chat
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Area -->
+                <div class="messages" id="messages"></div>
+
+                <!-- Input Area -->
+                <div class="input-area">
+                    <!-- Attachment Preview -->
+                    <div class="attachment-preview" id="attachment-preview"></div>
+                    
+                    <!-- Input Container -->
+                    <div class="input-container">
+                        <div class="attachment-button">
+                            <input type="file" id="file-input" multiple hidden>
+                            <button onclick="document.getElementById('file-input').click()">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                        </div>
+                        <textarea 
+                            id="user-input" 
+                            placeholder="Type your message here... (Shift + Enter for new line)"
+                            rows="1"
+                        ></textarea>
+                        <button id="send-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
